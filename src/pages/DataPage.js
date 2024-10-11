@@ -26,10 +26,11 @@ const DataPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
   const [data, setData] = useState([]); // Store the full dataset
-  const [filteredData, setFilteredData] = useState([]); // Store the filtered data based on age and gender
+  const [filteredData, setFilteredData] = useState([]); // Store the filtered data based on age, gender, and blood group
   const [searchTerm, setSearchTerm] = useState(''); // Search term state
   const [ageFilter, setAgeFilter] = useState(''); // Age filter state
   const [genderFilter, setGenderFilter] = useState(''); // Gender filter state
+  const [bloodGroupFilter, setBloodGroupFilter] = useState(''); // Blood group filter state
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0); // Track total number of records for pagination
 
@@ -73,13 +74,14 @@ const DataPage = () => {
     setCurrentPage(1); // Reset to the first page after search
   };
 
-  // Handle Age and Gender Filter changes
+  // Handle Age, Gender, and Blood Group Filter changes
   useEffect(() => {
     const applyFilters = () => {
       const filtered = data.filter((item) => {
         const ageMatch = ageFilter ? item.age === parseInt(ageFilter, 10) : true;
         const genderMatch = genderFilter ? item.gender.toLowerCase() === genderFilter.toLowerCase() : true;
-        return ageMatch && genderMatch;
+        const bloodGroupMatch = bloodGroupFilter ? item.bloodGroup.toUpperCase() === bloodGroupFilter.toUpperCase() : true;
+        return ageMatch && genderMatch && bloodGroupMatch;
       });
 
       setFilteredData(filtered);
@@ -88,7 +90,7 @@ const DataPage = () => {
     };
 
     applyFilters();
-  }, [ageFilter, genderFilter, data]); // Run the filtering logic when filters or data change
+  }, [ageFilter, genderFilter, bloodGroupFilter, data]); // Run the filtering logic when filters or data change
 
   // Get data for the current page based on the pagination
   const currentTableData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -111,7 +113,7 @@ const DataPage = () => {
             />
           </div>
 
-          {/* Age and Gender Filters */}
+          {/* Age, Gender, and Blood Group Filters */}
           <div className="filters-container">
             <label>
               Age:
@@ -133,6 +135,24 @@ const DataPage = () => {
                 <option value="">All</option>
                 <option value="male">Male</option>
                 <option value="female">Female</option>
+              </select>
+            </label>
+            <label>
+              Blood Group:
+              <select
+                value={bloodGroupFilter}
+                onChange={(e) => setBloodGroupFilter(e.target.value)}
+                className="filter-input"
+              >
+                <option value="">All</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
               </select>
             </label>
           </div>
