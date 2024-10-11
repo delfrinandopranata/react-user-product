@@ -1,5 +1,3 @@
-/* src/components/tableStyles.scss */
-
 /* Import Neutra Text Fonts */
 @font-face {
   font-family: 'Neutra Text';
@@ -152,10 +150,6 @@ td:last-child, th:last-child {
   margin-bottom: 30px;
   box-shadow: 0 4px 8px rgba(50, 38, 37, 0.2);
   width: 100%;
-  position: relative;
-  left: 0;
-  top: 0;
-  z-index: 2;
 }
 
 .page-header::after {
@@ -233,18 +227,6 @@ nav a.active {
   margin: 20px 0;
 }
 
-.search-icon {
-  font-size: 24px;
-  cursor: pointer;
-  margin-right: 10px;
-  color: #322625;
-  transition: color 0.3s ease;
-}
-
-.search-icon:hover {
-  color: #fdc936;
-}
-
 .search-input {
   padding: 10px;
   border: 2px solid #fdc936;
@@ -261,28 +243,27 @@ nav a.active {
 
 /* Styles for Filters Container */
 .filters-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
   margin: 20px 0;
-  text-align: center;
 }
 
-.filters-container label,
-.filters-container select,
-.filters-container input {
-  font-size: 16px;
-  margin: 0 10px;
-}
-
-.filters-container input {
+.filter-input {
   padding: 10px;
   border: 2px solid #fdc936;
   border-radius: 5px;
+  font-size: 16px;
   width: 200px;
-  transition: border-color 0.3s;
 }
 
-.filters-container input:focus {
+.filter-input:focus {
   border-color: #322625;
   outline: none;
+}
+
+select.filter-input {
+  width: 220px; /* Adjust width for the dropdown */
 }
 
 /* Pagination Styles */
@@ -292,8 +273,7 @@ nav a.active {
   padding: 20px;
 }
 
-/* src/components/tableStyles.scss */
-
+/* Page Size Container */
 .page-size-container {
   display: flex;
   align-items: center;
@@ -311,32 +291,9 @@ nav a.active {
   border: 2px solid #fdc936;
   border-radius: 5px;
   transition: border-color 0.3s;
-
-  &:focus {
-    border-color: #322625;
-    outline: none;
-  }
 }
 
-/* src/components/tableStyles.scss */
-
-/* Styles for Filter Container */
-.filters-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  margin: 20px 0;
-}
-
-.filter-input {
-  padding: 10px;
-  border: 2px solid #fdc936;
-  border-radius: 5px;
-  font-size: 16px;
-  width: 200px;
-}
-
-.filter-input:focus {
+.page-size-dropdown:focus {
   border-color: #322625;
   outline: none;
 }
