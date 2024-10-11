@@ -1,4 +1,4 @@
-// src/pages/DataPage.js
+// src/pages/UserPage.js
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Table from '../components/Table';
@@ -20,8 +20,8 @@ const fetchFullData = async (type) => {
   }
 };
 
-// DataPage component to display the table with pagination, search, and filter functionality
-const DataPage = () => {
+// UserPage component to display the table with pagination, search, and filter functionality
+const UserPage = () => {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
@@ -176,7 +176,7 @@ const DataPage = () => {
 
           {/* Table Component */}
           <div className="table-container">
-            <Table columns={columnsConfig[pageType]} data={currentTableData} />
+            <Table columns={columnsConfig['users']} data={currentTableData} />
           </div>
 
           {/* Pagination Component */}
@@ -193,4 +193,4 @@ const DataPage = () => {
   );
 };
 
-export default DataPage;
+export default UserPage;

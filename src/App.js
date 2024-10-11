@@ -1,8 +1,8 @@
 // src/App.js
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import DataPage from './pages/DataPage';
-// import './components/style.scss'; // Existing styles
+import UserPage from './pages/UserPage';
+import ProductPage from './pages/ProductPage'; // Import the new ProductPage
 import './components/tableStyles.scss'; // Import the new table styles
 
 export default function App() {
@@ -19,9 +19,9 @@ export default function App() {
 
         {/* Route Configuration */}
         <Routes>
-          <Route path="/users" element={<DataPage />} />
-          <Route path="/products" element={<DataPage />} />
-          <Route path="/" element={<DataPage />} />
+          <Route path="/users" element={<UserPage />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/" element={<UserPage />} /> {/* Default route */}
         </Routes>
       </div>
     </Router>
