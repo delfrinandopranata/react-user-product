@@ -20,15 +20,16 @@ const fetchFullData = async (type) => {
   }
 };
 
-// DataPage component to display the table with pagination, search, and age filter functionality
+// DataPage component to display the table with pagination, search, and filter functionality
 const DataPage = () => {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
   const [data, setData] = useState([]); // Store the full dataset
-  const [filteredData, setFilteredData] = useState([]); // Store the filtered data based on age
+  const [filteredData, setFilteredData] = useState([]); // Store the filtered data based on age and gender
   const [searchTerm, setSearchTerm] = useState(''); // Search term state
   const [ageFilter, setAgeFilter] = useState(''); // Age filter state
+  const [genderFilter, setGenderFilter] = useState(''); // Gender filter state
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0); // Track total number of records for pagination
 
@@ -72,21 +73,22 @@ const DataPage = () => {
     setCurrentPage(1); // Reset to the first page after search
   };
 
-  // Handle Age Filter change
-  const handleAgeFilterChange = (event) => {
-    const ageValue = event.target.value;
-    setAgeFilter(ageValue);
+  // Handle Age and Gender Filter changes
+  useEffect(() => {
+    const applyFilters = () => {
+      const filtered = data.filter((item) => {
+        const ageMatch = ageFilter ? item.age === parseInt(ageFilter, 10) : true;
+        const genderMatch = genderFilter ? item.gender.toLowerCase() === genderFilter.toLowerCase() : true;
+        return ageMatch && genderMatch;
+      });
 
-    // Filter the full data set based on the age value
-    const filtered = data.filter((item) => {
-      if (!ageValue) return true; // If no filter, return all
-      return item.age === parseInt(ageValue, 10); // Exact match for age
-    });
+      setFilteredData(filtered);
+      setTotalCount(filtered.length); // Update total count to reflect filtered data
+      setCurrentPage(1); // Reset to the first page after filter
+    };
 
-    setFilteredData(filtered);
-    setTotalCount(filtered.length); // Update total count to reflect filtered data
-    setCurrentPage(1); // Reset to the first page after filter
-  };
+    applyFilters();
+  }, [ageFilter, genderFilter, data]); // Run the filtering logic when filters or data change
 
   // Get data for the current page based on the pagination
   const currentTableData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
@@ -109,17 +111,29 @@ const DataPage = () => {
             />
           </div>
 
-          {/* Age Filter */}
+          {/* Age and Gender Filters */}
           <div className="filters-container">
             <label>
               Age:
               <input
                 type="number"
                 value={ageFilter}
-                onChange={handleAgeFilterChange}
+                onChange={(e) => setAgeFilter(e.target.value)}
                 className="filter-input"
                 placeholder="Filter by Age"
               />
+            </label>
+            <label>
+              Gender:
+              <select
+                value={genderFilter}
+                onChange={(e) => setGenderFilter(e.target.value)}
+                className="filter-input"
+              >
+                <option value="">All</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
             </label>
           </div>
 
