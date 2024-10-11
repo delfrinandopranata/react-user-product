@@ -20,14 +20,15 @@ const fetchFullData = async (type) => {
   }
 };
 
-// DataPage component to display the table with pagination and search functionality
+// DataPage component to display the table with pagination, search, and age filter functionality
 const DataPage = () => {
   const location = useLocation();
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Default page size is 10
   const [data, setData] = useState([]); // Store the full dataset
-  const [filteredData, setFilteredData] = useState([]); // Store the filtered data based on search
+  const [filteredData, setFilteredData] = useState([]); // Store the filtered data based on age
   const [searchTerm, setSearchTerm] = useState(''); // Search term state
+  const [ageFilter, setAgeFilter] = useState(''); // Age filter state
   const [loading, setLoading] = useState(true);
   const [totalCount, setTotalCount] = useState(0); // Track total number of records for pagination
 
@@ -71,6 +72,22 @@ const DataPage = () => {
     setCurrentPage(1); // Reset to the first page after search
   };
 
+  // Handle Age Filter change
+  const handleAgeFilterChange = (event) => {
+    const ageValue = event.target.value;
+    setAgeFilter(ageValue);
+
+    // Filter the full data set based on the age value
+    const filtered = data.filter((item) => {
+      if (!ageValue) return true; // If no filter, return all
+      return item.age === parseInt(ageValue, 10); // Exact match for age
+    });
+
+    setFilteredData(filtered);
+    setTotalCount(filtered.length); // Update total count to reflect filtered data
+    setCurrentPage(1); // Reset to the first page after filter
+  };
+
   // Get data for the current page based on the pagination
   const currentTableData = filteredData.slice((currentPage - 1) * pageSize, currentPage * pageSize);
 
@@ -90,6 +107,20 @@ const DataPage = () => {
               onChange={handleSearchChange}
               className="search-input"
             />
+          </div>
+
+          {/* Age Filter */}
+          <div className="filters-container">
+            <label>
+              Age:
+              <input
+                type="number"
+                value={ageFilter}
+                onChange={handleAgeFilterChange}
+                className="filter-input"
+                placeholder="Filter by Age"
+              />
+            </label>
           </div>
 
           {/* Page Size Selection Dropdown */}
