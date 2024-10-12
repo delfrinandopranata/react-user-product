@@ -12,9 +12,9 @@ This project is a React-based application that displays user and product data wi
   - Users: Filter by age, gender, and blood group.
   - Products: Filter by price, brand, and category.
 
-![alt text](users.png)
+![Users Page](users.png)
 
-![alt text](products.png)
+![Products Page](products.png)
 
 ## Technologies Used
 
@@ -123,6 +123,10 @@ The styling is handled using SCSS. You can find the main styles for the table an
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
+
+## Author
+
+Developed by Delfrinando Pranata. You can find more details and the repository [here](https://github.com/delfrinandopranata/react-user-product).
 
 ## Acknowledgments
 
